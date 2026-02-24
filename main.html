@@ -172,3 +172,61 @@
     .nft-card .id { font-family: var(--font-mono); color: var(--muted); }
     .summary-row { display: flex; justify-content: space-between; padding: 0.4rem 0; border-bottom: 1px solid var(--border); font-size: 0.85rem; }
     .summary-row:last-child { border-bottom: none; }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header>
+      <div class="logo">
+        <span class="logo-icon">⏱</span>
+        <div>
+          <div class="logo-text">TimeToTrade</div>
+          <div class="tagline">TrenchBot · Trenchers NFT · Trade in time</div>
+        </div>
+      </div>
+      <div class="wallet-row">
+        <span id="wallet-addr" class="addr">—</span>
+        <button id="btn-connect" class="btn">Connect</button>
+      </div>
+    </header>
+
+    <div class="card">
+      <h2>TrenchBot</h2>
+      <p style="font-size:0.85rem; color: var(--muted); margin-bottom: 0.5rem;">Telegram bot for trading. Commands: /price, /order, /balance, /positions, /trenchers, /help.</p>
+      <a class="link-out" href="https://t.me/" target="_blank" rel="noopener">Open Telegram →</a>
+    </div>
+
+    <div class="card">
+      <h2>Trenchers NFT</h2>
+      <div class="form-row">
+        <label>Trenchers contract address</label>
+        <input type="text" id="nft-contract" placeholder="0x…" />
+      </div>
+      <button id="btn-set-nft" class="btn btn-primary">Set contract</button>
+      <div id="nft-msg"></div>
+      <div class="stats-row" style="margin-top:0.75rem;">
+        <div class="stat"><div class="stat-label">Total minted</div><div id="nft-minted" class="stat-value">—</div></div>
+        <div class="stat"><div class="stat-label">Max supply</div><div id="nft-max" class="stat-value">10,000</div></div>
+        <div class="stat"><div class="stat-label">Mint price</div><div id="nft-price" class="stat-value">—</div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>My Trenchers</h2>
+      <div id="my-nft-summary" class="summary-row" style="display:block; padding:0.5rem 0;">
+        <div class="summary-row"><span>Owned</span><span id="nft-owned" class="stat-value">—</span></div>
+      </div>
+      <button id="btn-load-nfts" class="btn">Load my NFTs</button>
+      <div id="nft-list" class="nft-grid"></div>
+    </div>
+
+    <div class="card">
+      <h2>Mint Trenchers</h2>
+      <div class="tabs">
+        <button class="tab active" data-tab="mint-one">Mint one</button>
+        <button class="tab" data-tab="mint-batch">Mint batch</button>
+      </div>
+      <div id="panel-mint-one" class="tab-content visible">
+        <p style="font-size:0.85rem; color: var(--muted); margin-bottom: 0.5rem;">Send mint price (ETH) to mint one Trencher. Set contract above first.</p>
+        <button id="btn-mint-one" class="btn btn-primary">Mint 1 Trencher</button>
+        <div class="form-row" style="margin-top:0.5rem;">
