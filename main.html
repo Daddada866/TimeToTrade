@@ -288,3 +288,61 @@
       <h2>FAQ</h2>
       <p style="font-size:0.85rem; color: var(--muted); margin-bottom: 0.5rem;"><strong>What is TimeToTrade?</strong> Web UI for TrenchBot and Trenchers NFT. Connect wallet, set contract, mint.</p>
       <p style="font-size:0.85rem; color: var(--muted); margin-bottom: 0.5rem;"><strong>What is TrenchBot?</strong> Telegram bot for trading (simulated orders, price, balance, positions).</p>
+      <p style="font-size:0.85rem; color: var(--muted); margin-bottom: 0.5rem;"><strong>What are Trenchers?</strong> NFT collection, 10,000 supply, symbol TRCH. Mint with ETH at mint price.</p>
+      <p style="font-size:0.85rem; color: var(--muted); margin-bottom: 0.5rem;"><strong>Which network?</strong> Use the same network as the deployed Trenchers contract (see Chain ID above).</p>
+    </div>
+
+    <div class="card">
+      <h2>Quick tips</h2>
+      <ul style="font-size:0.82rem; color: var(--muted); padding-left: 1.25rem; line-height: 1.6;">
+        <li>Deploy Trenchers.sol (Solidity) first; copy the contract address into the field above.</li>
+        <li>Mint price is set by the contract owner; check the Mint price stat before minting.</li>
+        <li>Batch mint saves gas when minting multiple Trenchers in one tx (max 32 per batch).</li>
+        <li>TrenchBot is a separate Python engine; run it with your Telegram bot token to enable /price, /order, etc.</li>
+        <li>Trenchers treasury and minter addresses are set in the contract constructor at deploy.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>Contract info</h2>
+      <p style="font-size:0.8rem; color: var(--muted); line-height: 1.5;">
+        Trenchers: ERC721, name &quot;Trenchers&quot;, symbol &quot;TRCH&quot;, max supply 10,000. Owner can set base URI and mint price; minter or owner can mint (with payment to treasury). Pause supported. No upgrade; immutable treasury.
+      </p>
+    </div>
+
+    <div class="card">
+      <h2>About</h2>
+      <p style="font-size:0.85rem; color: var(--muted); line-height: 1.6;">
+        TimeToTrade is the web interface for the TrenchBot ecosystem. Connect your wallet to view and mint Trenchers NFTs (10,000 supply).
+        TrenchBot runs on Telegram for trading commands. Set the Trenchers contract address after deployment.
+      </p>
+    </div>
+
+    <div class="card">
+      <h2>Reference</h2>
+      <p style="font-size:0.78rem; color: var(--muted); line-height: 1.5;">
+        TimeToTrade — single-page web UI. TrenchBot — Python Telegram bot (TrenchBot.py). Trenchers — Solidity NFT (Trenchers.sol). All config and addresses are pre-populated or set at deploy; replace constructor addresses for mainnet. Unique naming: TRCH_ errors, TrencherMinted events, trenchTreasury immutable. Safe for EVM mainnets: ReentrancyGuard, Ownable, supply cap 10000, batch mint cap 32. Mint flow: user sends ETH to mint() or mintBatch(); treasury receives payment. Owner can setBaseURI, setMintPriceWei, setMinter, setPaused. TrenchBot commands: start help price order balance positions cancel history trenchers signals stats pairs about. Default pairs: TRCH/ETH, TRCH/USDT, ETH/USDT. Rate limit and max orders per user configurable in bot env. Web: connect wallet (ethers v6), set Trenchers contract, view total minted and mint price, load owned balance, mint one or batch. Chain ID displayed for network check.
+      </p>
+      <ul style="font-size:0.7rem; color: var(--muted); padding-left: 1rem; line-height: 1.4; margin-top: 0.5rem;">
+        <li>1. Connect wallet. 2. Set Trenchers address. 3. Mint one or batch. 4. Load my NFTs for balance.</li>
+        <li>5. TrenchBot: /price, /order buy 1, /balance. 6. Trenchers: 10k supply, TRCH symbol.</li>
+        <li>7. treasury 0x4a8c... 8. minter 0x5b9d... 9. mintPriceWei set by owner. 10. totalMinted view.</li>
+        <li>11. ERC721, no enumeration in base contract. 12. balanceOf(owner) for owned count.</li>
+        <li>13. TimeToTrade 750-1000 lines target. 14. TrenchBot 1370-2000 lines single .py file.</li>
+        <li>15. Trenchers.sol separate EVM contract. 16. Unique events: TrencherMinted, TrencherBatchMinted.</li>
+        <li>17. TRCH_ZeroAddress, TRCH_MaxSupplyReached, TRCH_Paused. 18. whenNotPaused, onlyMinter.</li>
+        <li>19. mint(to) payable. 20. mintBatch(to, count) payable. 21. mintByOwner(to, count) owner only.</li>
+        <li>22. setPaused, setMinter, setBaseURI, setMintPriceWei. 23. TRCH_DOMAIN_SALT constant.</li>
+        <li>24. TRCH_MAX_SUPPLY 10000. 25. TRCH_BATCH_MINT_CAP 32. 26. OpenZeppelin ERC721 Ownable ReentrancyGuard.</li>
+        <li>27. formatEth(wei) for display. 28. showMsg(container, text, type). 29. refreshNftStats().</li>
+        <li>30. btn-connect, btn-set-nft, btn-load-nfts, btn-mint-one, btn-mint-batch. 31. nft-contract input.</li>
+        <li>32. chain-id, nft-minted, nft-price, nft-owned. 33. Tabs: mint-one, mint-batch.</li>
+        <li>34. Space Grotesk, Space Mono fonts. 35. --accent #22c4e8, --green #34d399.</li>
+        <li>36. ethers 6.9.0 BrowserProvider, Contract. 37. parseEther for mint value.</li>
+        <li>38. TRENCHERS_ABI: totalMinted, mintPriceWei, mint, mintBatch, balanceOf, ownerOf.</li>
+        <li>39. Replace 0x4a8c... and 0x5b9d... for mainnet deploy. 40. End reference.</li>
+        <li>41. TrenchBot style: telegram bot for trading. 42. Trenchers 10000 NFT collection.</li>
+        <li>43. TimeToTrade associated web interface. 44. Unique from other contracts.</li>
+        <li>45. No readonly; immutable in Solidity. 46. Constructor addresses random.</li>
+        <li>47. TRCH_NotMinter TRCH_TransferFailed TRCH_WithdrawZero. 48. TRCH_InsufficientMintPayment.</li>
+        <li>49. TRCH_BatchTooLarge TRCH_ZeroCount. 50. TrencherBaseUriSet TrencherMinterSet.</li>
