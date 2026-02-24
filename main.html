@@ -114,3 +114,61 @@
       border: 1px solid var(--border);
       border-radius: var(--radius);
       padding: 0.6rem;
+      text-align: center;
+    }
+    .stat-label { font-size: 0.65rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
+    .stat-value { font-family: var(--font-mono); font-size: 0.9rem; margin-top: 0.2rem; }
+    input[type="text"], input[type="number"] {
+      width: 100%;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      padding: 0.5rem 0.75rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--surface);
+      color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+    input::placeholder { color: var(--muted); }
+    label { display: block; font-size: 0.78rem; color: var(--muted); margin-bottom: 0.25rem; }
+    .form-row { margin-bottom: 0.65rem; }
+    .msg { font-size: 0.85rem; padding: 0.5rem; border-radius: var(--radius); margin-top: 0.5rem; }
+    .msg.err { background: rgba(248, 113, 113, 0.12); color: var(--red); }
+    .msg.ok { background: rgba(52, 211, 153, 0.12); color: var(--green); }
+    .tabs { display: flex; gap: 0.5rem; margin-bottom: 1rem; flex-wrap: wrap; }
+    .tab {
+      padding: 0.5rem 1rem;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--muted);
+      cursor: pointer;
+      font-weight: 600;
+    }
+    .tab.active { background: var(--panel); color: var(--accent); border-color: var(--accent); }
+    .tab:hover:not(.active) { color: var(--text); }
+    .tab-content { display: none; }
+    .tab-content.visible { display: block; }
+    .link-out {
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+    .link-out:hover { text-decoration: underline; }
+    .nft-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: 0.75rem;
+      margin-top: 0.75rem;
+    }
+    .nft-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 0.75rem;
+      font-size: 0.8rem;
+      text-align: center;
+    }
+    .nft-card .id { font-family: var(--font-mono); color: var(--muted); }
+    .summary-row { display: flex; justify-content: space-between; padding: 0.4rem 0; border-bottom: 1px solid var(--border); font-size: 0.85rem; }
+    .summary-row:last-child { border-bottom: none; }
