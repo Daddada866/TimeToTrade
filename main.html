@@ -346,3 +346,61 @@
         <li>45. No readonly; immutable in Solidity. 46. Constructor addresses random.</li>
         <li>47. TRCH_NotMinter TRCH_TransferFailed TRCH_WithdrawZero. 48. TRCH_InsufficientMintPayment.</li>
         <li>49. TRCH_BatchTooLarge TRCH_ZeroCount. 50. TrencherBaseUriSet TrencherMinterSet.</li>
+        <li>51. TrencherTreasuryWithdrawn TrencherMintPriceSet TrencherPauseToggled.</li>
+        <li>52. Safe for EVM mainnets. 53. Combine all in one file. 54. Single Solidity file Trenchers.sol.</li>
+        <li>55. Single Python file TrenchBot.py. 56. Single HTML file TimeToTrade index.html.</li>
+        <li>57. Wallet connect ethers v6. 58. getAddress signer provider. 59. Contract set then mint.</li>
+        <li>60. formatEth for wei to display. 61. showMsg err ok. 62. refreshNftStats totalMinted mintPriceWei.</li>
+        <li>63. balanceOf for owned count. 64. mint(to) mintBatch(to, count). 65. value in wei.</li>
+        <li>66. parseEther for user input. 67. tx.wait() after sendTransaction. 68. Chain ID from getNetwork().</li>
+        <li>69. Tabs mint-one mint-batch. 70. panel-mint-one panel-mint-batch visible.</li>
+        <li>71. nft-contract input placeholder 0x. 72. btn-set-nft btn-load-nfts. 73. nft-list nft-grid.</li>
+        <li>74. nft-owned nft-minted nft-price nft-max. 75. mint-msg mint-one-value mint-batch-count.</li>
+        <li>76. TRENCHERS_ABI array of function fragments. 77. provider signer nftContractAddress nftContract.</li>
+        <li>78. Connect then set contract then mint or load. 79. catch e.message for errors.</li>
+        <li>80. TimeToTrade 750-1000 lines. 81. End.</li>
+      </ul>
+      <p style="font-size:0.72rem; color: var(--muted); margin-top: 0.5rem; line-height: 1.4;">
+        82. TrenchBot config: TRENCH_BOT_TOKEN, TRENCH_WEBHOOK_PORT 8947, TRENCH_WEBHOOK_SECRET, TRENCH_API_BASE, TRENCH_POLL_INTERVAL_SEC 1.2, TRENCH_MAX_ORDERS_PER_USER 50, TRENCH_RATE_LIMIT_PER_MIN 20, TRENCH_DEFAULT_PAIR TRCH/ETH, TRENCH_TREASURY_ADDRESS, TRENCHERS_NFT_ADDRESS, TRENCH_SIGNAL_CHANNEL_ID, TRENCH_ENGINE_SALT, TRENCH_LOG_LEVEL. 83. All populated; no placeholder. 84. trench_place_order trench_cancel_order trench_get_orders trench_get_positions trench_get_balance trench_get_price. 85. trench_send_message trench_dispatch trench_parse_update trench_process_update trench_run_poll trench_webhook_handler. 86. trench_validate_config trench_config_summary trench_export_state trench_import_state. 87. trench_place_limit_order trench_try_fill_limit_orders. 88. trench_is_valid_evm_address trench_short_address trench_get_order_by_id trench_get_pending_orders trench_list_pairs trench_set_mock_price trench_get_mock_prices. 89. OrderSide OrderStatus OrderType TrenchOrder TrenchPosition TrenchUserBalance. 90. _trench_orders _trench_positions _trench_balances _trench_limit_orders _trench_order_id_counter _trench_rate_limit _trench_mock_prices. 91. TrenchBotError TrenchRateLimitExceeded TrenchOrderNotFound TrenchInvalidPair TrenchMaxOrdersExceeded TrenchZeroAmount TrenchTelegramApiError TrenchWebhookValidationError TrenchOrderAlreadyFilled TrenchOrderAlreadyCancelled TrenchSlippageExceeded TrenchNotAuthorized. 92. TRENCH_VERSION 1.0.0 TRENCH_DECIMALS 18 TRENCH_SCALE 10**18 TRENCH_BPS 10000 TRENCH_NAMESPACE TRENCH_ORDER_NAMESPACE. 93. Handlers: start help price order balance positions cancel history trenchers signals stats pairs about. 94. getUpdates sendMessage. 95. Webhook validate secret body signature. 96. Poll loop getUpdates offset. 97. Export import state orders balances positions. 98. Limit order fill when market price crosses. 99. Config validation errors list. 100. TimeToTrade reference complete.
+      </p>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      // TimeToTrade — TrenchBot & Trenchers NFT web interface. Single file.
+      const TRENCHERS_ABI = [
+        "function totalMinted() external view returns (uint256)",
+        "function mintPriceWei() external view returns (uint256)",
+        "function mint(address to) external payable returns (uint256 tokenId)",
+        "function mintBatch(address to, uint256 count) external payable",
+        "function balanceOf(address owner) external view returns (uint256)",
+        "function ownerOf(uint256 tokenId) external view returns (address)"
+      ];
+
+      let provider, signer, nftContractAddress = "", nftContract = null;
+
+      const walletEl = document.getElementById("wallet-addr");
+      const btnConnect = document.getElementById("btn-connect");
+      const nftInput = document.getElementById("nft-contract");
+      const btnSetNft = document.getElementById("btn-set-nft");
+      const nftMsg = document.getElementById("nft-msg");
+      const nftMinted = document.getElementById("nft-minted");
+      const nftPrice = document.getElementById("nft-price");
+      const nftOwned = document.getElementById("nft-owned");
+      const nftList = document.getElementById("nft-list");
+      const chainIdEl = document.getElementById("chain-id");
+
+      function showMsg(container, text, type) {
+        container.innerHTML = text ? "<div class=\"msg " + type + "\">" + text + "</div>" : "";
+      }
+
+      function formatEth(wei) {
+        if (wei === undefined || wei === null) return "—";
+        const w = typeof wei === "bigint" ? wei : BigInt(wei);
+        if (w === 0n) return "0";
+        const s = w.toString();
+        if (s.length <= 18) return "0." + s.padStart(18, "0").slice(0, 6);
+        return (Number(w) / 1e18).toFixed(4);
+      }
+
