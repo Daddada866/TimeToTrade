@@ -230,3 +230,61 @@
         <p style="font-size:0.85rem; color: var(--muted); margin-bottom: 0.5rem;">Send mint price (ETH) to mint one Trencher. Set contract above first.</p>
         <button id="btn-mint-one" class="btn btn-primary">Mint 1 Trencher</button>
         <div class="form-row" style="margin-top:0.5rem;">
+          <label>ETH to send (must be ≥ mint price)</label>
+          <input type="text" id="mint-one-value" placeholder="0.005" />
+        </div>
+      </div>
+      <div id="panel-mint-batch" class="tab-content">
+        <div class="form-row">
+          <label>Count (max 32)</label>
+          <input type="number" id="mint-batch-count" placeholder="5" min="1" max="32" value="5" />
+        </div>
+        <p style="font-size:0.85rem; color: var(--muted); margin-bottom: 0.5rem;">Send (mint price × count) ETH.</p>
+        <button id="btn-mint-batch" class="btn btn-primary">Mint batch</button>
+      </div>
+      <div id="mint-msg" class="msg"></div>
+    </div>
+
+    <div class="card">
+      <h2>Network</h2>
+      <div class="stats-row">
+        <div class="stat"><div class="stat-label">Chain ID</div><div id="chain-id" class="stat-value">—</div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>TrenchBot commands</h2>
+      <p style="font-size:0.8rem; color: var(--muted); margin-bottom: 0.5rem;">Use these in Telegram with the bot.</p>
+      <ul style="font-size:0.85rem; color: var(--text); padding-left: 1.25rem; line-height: 1.7;">
+        <li><strong>/start</strong> — Welcome and command list</li>
+        <li><strong>/help</strong> — Full command reference</li>
+        <li><strong>/price [pair]</strong> — Get price (default TRCH/ETH)</li>
+        <li><strong>/order buy|sell &lt;amount&gt; [pair]</strong> — Place market order</li>
+        <li><strong>/balance</strong> — Simulated balance</li>
+        <li><strong>/positions</strong> — Open positions</li>
+        <li><strong>/cancel &lt;order_id&gt;</strong> — Cancel order</li>
+        <li><strong>/history [filled|pending]</strong> — Recent orders</li>
+        <li><strong>/trenchers</strong> — Trenchers NFT contract info</li>
+        <li><strong>/signals</strong> — Signal channel</li>
+        <li><strong>/stats</strong> — Engine stats</li>
+        <li><strong>/pairs</strong> — Supported pairs</li>
+        <li><strong>/about</strong> — Bot version and addresses</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>How to mint</h2>
+      <ol style="font-size:0.85rem; color: var(--text); padding-left: 1.25rem; line-height: 1.7;">
+        <li>Connect your wallet above.</li>
+        <li>Paste the deployed Trenchers contract address and click Set contract.</li>
+        <li>Check mint price (shown in stats). Send at least that much ETH when minting.</li>
+        <li>Mint one: enter ETH amount ≥ mint price and click Mint 1 Trencher.</li>
+        <li>Mint batch: enter count (1–32) and send (mint price × count) ETH, then click Mint batch.</li>
+        <li>Load my NFTs to see your balance.</li>
+      </ol>
+    </div>
+
+    <div class="card">
+      <h2>FAQ</h2>
+      <p style="font-size:0.85rem; color: var(--muted); margin-bottom: 0.5rem;"><strong>What is TimeToTrade?</strong> Web UI for TrenchBot and Trenchers NFT. Connect wallet, set contract, mint.</p>
+      <p style="font-size:0.85rem; color: var(--muted); margin-bottom: 0.5rem;"><strong>What is TrenchBot?</strong> Telegram bot for trading (simulated orders, price, balance, positions).</p>
