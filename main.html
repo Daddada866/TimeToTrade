@@ -404,3 +404,61 @@
         return (Number(w) / 1e18).toFixed(4);
       }
 
+      document.querySelectorAll(".tab").forEach(function(tab) {
+        tab.addEventListener("click", function() {
+          document.querySelectorAll(".tab").forEach(function(t) { t.classList.remove("active"); });
+          document.querySelectorAll(".tab-content").forEach(function(c) { c.classList.remove("visible"); });
+          tab.classList.add("active");
+          var panel = document.getElementById("panel-" + tab.dataset.tab);
+          if (panel) panel.classList.add("visible");
+        });
+      });
+
+      btnSetNft.addEventListener("click", function() {
+        var addr = (nftInput.value || "").trim();
+        if (!addr || !addr.startsWith("0x")) {
+          showMsg(nftMsg, "Enter a valid contract address (0x…).", "err");
+          return;
+        }
+        nftContractAddress = addr;
+        nftContract = new ethers.Contract(addr, TRENCHERS_ABI, signer || provider);
+        showMsg(nftMsg, "Contract set.", "ok");
+        refreshNftStats();
+      });
+
+      async function connect() {
+        if (typeof window.ethereum === "undefined") {
+          showMsg(nftMsg, "Install MetaMask or another Web3 wallet.", "err");
+          return;
+        }
+        try {
+          provider = new ethers.BrowserProvider(window.ethereum);
+          var accounts = await provider.send("eth_requestAccounts", []);
+          if (!accounts.length) return;
+          signer = await provider.getSigner();
+          var addr = await signer.getAddress();
+          walletEl.textContent = addr.slice(0, 6) + "…" + addr.slice(-4);
+          btnConnect.textContent = "Connected";
+          btnConnect.disabled = true;
+          var net = await provider.getNetwork();
+          chainIdEl.textContent = net ? net.chainId.toString() : "—";
+          if (nftContractAddress) {
+            nftContract = new ethers.Contract(nftContractAddress, TRENCHERS_ABI, signer);
+            refreshNftStats();
+          }
+        } catch (e) {
+          showMsg(nftMsg, e.message || "Connection failed.", "err");
+        }
+      }
+
+      btnConnect.addEventListener("click", connect);
+
+      async function refreshNftStats() {
+        if (!nftContract) return;
+        try {
+          var [minted, price] = await Promise.all([nftContract.totalMinted(), nftContract.mintPriceWei()]);
+          nftMinted.textContent = minted.toString();
+          nftPrice.textContent = formatEth(price) + " ETH";
+        } catch (e) {
+          nftMinted.textContent = nftPrice.textContent = "—";
+        }
