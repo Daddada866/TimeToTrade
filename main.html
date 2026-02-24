@@ -462,3 +462,61 @@
         } catch (e) {
           nftMinted.textContent = nftPrice.textContent = "—";
         }
+      }
+
+      document.getElementById("btn-load-nfts").addEventListener("click", async function() {
+        if (!nftContract || !signer) {
+          showMsg(nftMsg, "Connect wallet and set contract first.", "err");
+          return;
+        }
+        nftList.innerHTML = "<p style=\"color:var(--muted);\">Loading…</p>";
+        try {
+          var addr = await signer.getAddress();
+          var bal = await nftContract.balanceOf(addr);
+          document.getElementById("nft-owned").textContent = bal.toString();
+          if (Number(bal) === 0) {
+            nftList.innerHTML = "<p style=\"color:var(--muted); font-size:0.85rem;\">No Trenchers owned. Mint below.</p>";
+            return;
+          }
+          nftList.innerHTML = "<p style=\"color:var(--green); font-size:0.85rem;\">You own " + bal.toString() + " Trencher(s). Token IDs 0 to totalMinted-1 on contract.</p>";
+        } catch (e) {
+          nftList.innerHTML = "<p class=\"msg err\">" + (e.message || "Failed to load") + "</p>";
+        }
+      });
+
+      document.getElementById("btn-mint-one").addEventListener("click", async function() {
+        if (!nftContract || !signer) {
+          showMsg(document.getElementById("mint-msg"), "Connect wallet and set contract first.", "err");
+          return;
+        }
+        var valueStr = (document.getElementById("mint-one-value").value || "").trim() || "0.005";
+        var valueWei = ethers.parseEther(valueStr);
+        showMsg(document.getElementById("mint-msg"), "Minting…", "ok");
+        try {
+          var tx = await nftContract.mint(await signer.getAddress(), { value: valueWei });
+          await tx.wait();
+          showMsg(document.getElementById("mint-msg"), "Minted successfully.", "ok");
+          refreshNftStats();
+          document.getElementById("btn-load-nfts").click();
+        } catch (e) {
+          showMsg(document.getElementById("mint-msg"), e.message || "Mint failed.", "err");
+        }
+      });
+
+      document.getElementById("btn-mint-batch").addEventListener("click", async function() {
+        if (!nftContract || !signer) {
+          showMsg(document.getElementById("mint-msg"), "Connect wallet and set contract first.", "err");
+          return;
+        }
+        var count = parseInt(document.getElementById("mint-batch-count").value, 10) || 5;
+        if (count < 1 || count > 32) count = 5;
+        var priceWei = await nftContract.mintPriceWei();
+        var valueWei = priceWei * BigInt(count);
+        showMsg(document.getElementById("mint-msg"), "Minting batch…", "ok");
+        try {
+          var tx = await nftContract.mintBatch(await signer.getAddress(), count, { value: valueWei });
+          await tx.wait();
+          showMsg(document.getElementById("mint-msg"), "Batch minted.", "ok");
+          refreshNftStats();
+          document.getElementById("btn-load-nfts").click();
+        } catch (e) {
